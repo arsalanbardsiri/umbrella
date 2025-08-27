@@ -67,7 +67,7 @@ weather_api = "https://api.pirateweather.net/forecast/#{weather_key}/#{list_lat_
 raw_weather = HTTP.get(weather_api)
 formated_weather = JSON.parse(raw_weather)
 current_weather = formated_weather["currently"]["temperature"]
-summary =  formated_weather["hourly"]["summary"]
+summary =  formated_weather["currently"]["summary"]
 
 puts "It is currently #{current_weather}°F.."
 puts "Next hour: #{summary}"
@@ -78,7 +78,8 @@ precip_probability = json_percip.map {|n| n.fetch("precipProbability")}
 
 if rain_flag == "rain"
   precip_probability.each do |element|
-    puts "In #{precip_probability.index(element)+1} hours, there is a #{element*100}% chance of precipitation."
+    prop = (element*100)
+    puts "In #{precip_probability.index(element)+1} hours, there is a #{prop.round(2)}% chance of precipitation."
   end
 else
   puts "You probably won't need an umbrella."
